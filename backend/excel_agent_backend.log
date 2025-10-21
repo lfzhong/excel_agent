@@ -379,3 +379,41 @@ try:
 except Exception as e:
     print(f"Error occurred: {e}")
 2025-10-21 18:30:22,016 - app - INFO - Executed code and got results
+2025-10-21 18:32:40,393 - app - INFO - Processing question: test
+2025-10-21 18:32:40,394 - excel_agent.pipeline.query_index - INFO - Searching for relevant files for question: test
+2025-10-21 18:32:40,848 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 18:32:40,854 - excel_agent.pipeline.query_index - INFO - Found 2 relevant files
+2025-10-21 18:32:40,854 - app - INFO - Found 2 relevant files
+2025-10-21 18:32:40,854 - app - INFO - Using file: 学生开题答辩组修改意见汇总_output_path.xlsx
+2025-10-21 18:32:40,854 - app - INFO - Metadata text being sent to LLM: File: 学生开题答辩组修改意见汇总_output_path.xlsx
+Summary: The Excel file likely contains a summary of feedback and comments from a thesis proposal defense for students, organized by various identifiers such as class, student ID, and mentor.
+File path: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/学生开题答辩组修改意见汇总_output_path.xlsx
+Sheet names: Sheet1
+Sheet 'Sheet1' columns: 序号, 班级, 学号, 姓名, 导师, 组别, 开题报告题目, 答辩组修改意见, 备注
+Sheet 'Sheet1' data types: {'序号': 'int64', '班级': 'object', '学号': 'int64', '姓名': 'object', '导师': 'object', '组别': 'object', '开题报告题目': 'object', '答辩组修改意见': 'object', '备注': 'float64'}
+Sample data from sheet 'Sheet1': [{'序号': '1', '班级': '12国贸（1）', '学号': '120107200125', '姓名': '卢荣荣', '导师': '茹玉骢', '组别': '第六组', '开题报告题目': '人民币离岸市场与在岸市场汇率的联动关系研究', '答辩组修改意见': '1.数据扩展', '备注': 'nan'}, {'序号': '2', '班级': '12国贸（1）', '学号': '120107200126', '姓名': '吕文杰', '导师': '张利风', '组别': '第六组', '开题报告题目': '浙江省茶叶出口竞争力现状及提升对策', '答辩组修改意见': '1.哪些因素影响竞争力 2.归纳的太乱，内容不规范写一个现状然后再写竞争力然后对策 表达有问题 3.重点不够突出 4.对策要具体', '备注': 'nan'}]
+
+2025-10-21 18:32:40,855 - excel_agent.pipeline.code_generator - INFO - Generating code for question: test
+2025-10-21 18:32:46,197 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 18:32:46,204 - excel_agent.pipeline.code_generator - INFO - Generated Python code for analysis
+2025-10-21 18:32:46,204 - app - INFO - Generated code for analysis
+2025-10-21 18:32:46,838 - root - INFO - 正在执行代码: import pandas as pd
+import warnings
+
+warnings.simplefilter(action='ignore', category=Warning)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+
+file_path = '/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/学生开题答辩组修改意见汇总_output_path.xlsx'
+
+try:
+    xls = pd.ExcelFile(file_path)
+    for sheet_name in xls.sheet_names:
+        df = pd.read_excel(xls, sheet_name=sheet_name)
+        df['学号'] = pd.to_numeric(df['学号'], errors='coerce')
+        df['序号'] = pd.to_numeric(df['序号'], errors='coerce')
+        df['备注'] = pd.to_numeric(df['备注'], errors='coerce')
+        print(df)
+except Exception as e:
+    print(f"An error occurred: {e}")
+2025-10-21 18:32:47,172 - app - INFO - Executed code and got results
