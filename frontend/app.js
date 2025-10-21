@@ -46,12 +46,8 @@ class ExcelAgent {
     }
 
     async callQueryAPI(question) {
-        const response = await fetch(`${this.apiBaseUrl}/query`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ question }),
+        const response = await fetch(`${this.apiBaseUrl}/query?question=${encodeURIComponent(question)}`, {
+            method: 'GET',
         });
 
         if (!response.ok) {

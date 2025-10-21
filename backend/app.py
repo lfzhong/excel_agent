@@ -147,12 +147,18 @@ async def query_excel_data(question: str):
                 if columns:  # Only add if sheet has columns
                     metadata_text += f"Sheet '{sheet_name}' columns: {', '.join(columns)}\n"
 
+            # Add data types for each sheet
+            for sheet_name, dtypes in top_file.get('dtypes', {}).items():
+                if dtypes:  # Only add if sheet has dtypes
+                    metadata_text += f"Sheet '{sheet_name}' data types: {dtypes}\n"
+
             # Add sample data if available
             for sheet_name, samples in top_file.get('sample_values', {}).items():
                 if samples:
                     metadata_text += f"Sample data from sheet '{sheet_name}': {str(samples[:2])}\n"
 
             logger.info(f"Using file: {file_name}")
+            logger.info(f"Metadata text being sent to LLM: {metadata_text}")
 
             # Step 3: Generate code based on metadata and question
             yield to_ret_s_suc(
