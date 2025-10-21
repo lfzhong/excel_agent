@@ -66,7 +66,7 @@ User question: {question}
 IMPORTANT: Use the file path '{file_path}' directly in your code. Do NOT use placeholders like 'your_file_path.xlsx' or any other generic names."""
 
     response = client.chat.completions.create(
-        model="gpt-4o-mini",  # Fixed model name from "gpt-5-mini" to "gpt-4o-mini"
+        model="gpt-4o-mini", 
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": enhanced_prompt}
