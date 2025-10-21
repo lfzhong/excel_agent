@@ -224,9 +224,12 @@ def main_unmerge_file(input_file, output_path):
                             labels = config['labels']  # 获取需要删除的行
                             header = config['header']  # 获取表头行号
                             labels = [x - 1 for x in labels]  # Convert to 0-based indexing
-                            # Header position in the modified file: since we delete rows after header,
-                            # header stays at its original position (converted to 0-based)
-                            header = [x - 1 for x in header]
+                            header = [x - 1 for x in header]  # Convert to 0-based indexing
+
+                            # Adjust header positions after dropping label rows
+                            # Headers move up by the number of deleted rows that come before them
+                            num_deleted_before = sum(1 for label_row in labels if label_row < min(header))
+                            header = [h - num_deleted_before for h in header]
                             # drop_file = f'{sheet_name}_modified_file.xlsx'  # 临时删除备注信息文件
                             drop_file = f'{sheet_name}_modified_{uuid.uuid4()}.xlsx'
 
@@ -261,18 +264,21 @@ if __name__ == '__main__':
     import glob
 
     # Process all Excel files in the original folder
-    original_folder = './backend/files/original'
-    processed_folder = './backend/files/processed'
+    # original_folder = './backend/files/original'
+    # processed_folder = './backend/files/processed'
 
-    os.makedirs(processed_folder, exist_ok=True)
+    # os.makedirs(processed_folder, exist_ok=True)
 
-    for input_file in glob.glob(os.path.join(original_folder, '*.xlsx')):
-        file_name = os.path.basename(input_file)
-        output_file = os.path.join(processed_folder, file_name.replace('.xlsx', '_output_path.xlsx'))
+    # for input_file in glob.glob(os.path.join(original_folder, '*.xlsx')):
+    #     file_name = os.path.basename(input_file)
+    #     output_file = os.path.join(processed_folder, file_name.replace('.xlsx', '_output_path.xlsx'))
 
-        print(f"Processing {input_file} -> {output_file}")
-        result = main_unmerge_file(input_file, output_file)
-        if result:
-            print(f"Successfully processed {file_name}")
-        else:
-            print(f"Failed to process {file_name}")
+    #     print(f"Processing {input_file} -> {output_file}")
+    #     result = main_unmerge_file(input_file, output_file)
+    #     if result:
+    #         print(f"Successfully processed {file_name}")
+    #     else:
+    #         print(f"Failed to process {file_name}")
+    output_file = os.path.join('./backend/files/processed', '公共预算支出增长统计_output_path.xlsx')
+    result = main_unmerge_file('./backend/files/original/公共预算支出增长统计.xlsx', output_file)
+    print(result)

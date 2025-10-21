@@ -18,6 +18,44 @@ A powerful AI-powered Excel analysis tool that allows you to query Excel files u
 - **Progressive UI Rendering**: Dynamic content containers that adapt based on content type
 - **Speech Recognition**: Built-in voice processing with automatic transcription
 
+## Quick Start (Easy Setup)
+
+For the fastest way to get Excel Agent running:
+
+### 1. Start the Backend Server
+
+```bash
+./start.sh
+```
+
+This automatically:
+- Activates the virtual environment (if available)
+- Starts the FastAPI backend server at `http://localhost:8000`
+- Uses uvicorn if available, otherwise falls back to direct Python execution
+
+### 2. Start Both Backend and Frontend
+
+```bash
+./start.sh --frontend
+```
+
+This starts:
+- Backend API at `http://localhost:8000`
+- Frontend web interface at `http://localhost:3000`
+
+### 3. Stop All Services
+
+```bash
+./stop_all.sh
+```
+
+This gracefully stops all running Excel Agent processes.
+
+**Prerequisites:** Make sure you have your OpenAI API key set:
+```bash
+export OPENAI_API_KEY="your-openai-api-key-here"
+```
+
 ## Architecture
 
 The system consists of three main components:
