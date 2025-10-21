@@ -1,0 +1,343 @@
+2025-10-21 17:45:31,163 - excel_agent.batch_preprocess - INFO - Found 5 Excel files to process
+2025-10-21 17:45:31,163 - excel_agent.batch_preprocess - INFO - === STAGE 1: Dismantling Excel files ===
+2025-10-21 17:45:31,163 - excel_agent.batch_preprocess - INFO - Processing: 学生开题答辩组修改意见汇总.xlsx
+2025-10-21 17:45:31,163 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 开始取消所有 Sheet 的合并单元格...
+2025-10-21 17:45:31,171 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 读取 Excel 文件：/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/original/学生开题答辩组修改意见汇总.xlsx 完成
+2025-10-21 17:45:31,171 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：Sheet1 ...
+2025-10-21 17:45:31,171 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 Sheet1 处理完成
+2025-10-21 17:45:31,180 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - Excel 处理完成，已保存至：unmerged_file_a56180be-ecc5-477f-ab54-c4ecd1b6c316.xlsx
+2025-10-21 17:45:32,432 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:32,445 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - LLM response: [
+    {
+        "Sheet1": {
+            "labels": [],
+            "header": [1]
+        }
+    }
+]
+2025-10-21 17:45:32,446 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 原始结果:
+[
+    {
+        "Sheet1": {
+            "labels": [],
+            "header": [1]
+        }
+    }
+]
+2025-10-21 17:45:32,446 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - JSON转换后处理结果:
+[{'Sheet1': {'labels': [], 'header': [1]}}]
+2025-10-21 17:45:32,496 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：Sheet1 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/学生开题答辩组修改意见汇总_output_path.xlsx
+2025-10-21 17:45:32,499 - excel_agent.batch_preprocess - INFO - ✓ Successfully processed: 学生开题答辩组修改意见汇总.xlsx
+2025-10-21 17:45:32,499 - excel_agent.batch_preprocess - INFO - Processing: 复杂表头.xlsx
+2025-10-21 17:45:32,499 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 开始取消所有 Sheet 的合并单元格...
+2025-10-21 17:45:32,501 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 读取 Excel 文件：/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/original/复杂表头.xlsx 完成
+2025-10-21 17:45:32,501 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：复杂表头 ...
+2025-10-21 17:45:32,502 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：C1:D1, 值：销售数据
+2025-10-21 17:45:32,502 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(1, 3) 到 (1, 4)
+2025-10-21 17:45:32,502 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:32,502 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A1:B1, 值：产品信息
+2025-10-21 17:45:32,502 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(1, 1) 到 (1, 2)
+2025-10-21 17:45:32,502 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:32,502 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 复杂表头 处理完成
+2025-10-21 17:45:32,504 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - Excel 处理完成，已保存至：unmerged_file_25c8fdc4-6bb6-441f-aa68-5025a4bfd95e.xlsx
+2025-10-21 17:45:33,802 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:33,803 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - LLM response: [
+    {
+        "复杂表头": {
+            "labels": [],
+            "header": [1, 2]
+        }
+    }
+]
+2025-10-21 17:45:33,803 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 原始结果:
+[
+    {
+        "复杂表头": {
+            "labels": [],
+            "header": [1, 2]
+        }
+    }
+]
+2025-10-21 17:45:33,803 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - JSON转换后处理结果:
+[{'复杂表头': {'labels': [], 'header': [1, 2]}}]
+2025-10-21 17:45:33,815 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：复杂表头 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/复杂表头_output_path.xlsx
+2025-10-21 17:45:33,817 - excel_agent.batch_preprocess - INFO - ✓ Successfully processed: 复杂表头.xlsx
+2025-10-21 17:45:33,817 - excel_agent.batch_preprocess - INFO - Processing: cola.xlsx
+2025-10-21 17:45:33,817 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 开始取消所有 Sheet 的合并单元格...
+2025-10-21 17:45:33,847 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 读取 Excel 文件：/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/original/cola.xlsx 完成
+2025-10-21 17:45:33,847 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：Sheet1 ...
+2025-10-21 17:45:33,847 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 Sheet1 处理完成
+2025-10-21 17:45:33,847 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：Sheet2 ...
+2025-10-21 17:45:33,847 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 Sheet2 处理完成
+2025-10-21 17:45:33,847 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：Sheet3 ...
+2025-10-21 17:45:33,847 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 Sheet3 处理完成
+2025-10-21 17:45:33,852 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - Excel 处理完成，已保存至：unmerged_file_bf32a7b9-0bc1-47e5-b879-870f0d005b92.xlsx
+2025-10-21 17:45:35,639 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:35,641 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - LLM response: [
+    {
+        "Sheet1": {
+            "labels": [],
+            "header": [1]
+        }
+    },
+    {
+        "Sheet2": {
+            "labels": [],
+            "header": []
+        }
+    },
+    {
+        "Sheet3": {
+            "labels": [],
+            "header": []
+        }
+    }
+]
+2025-10-21 17:45:35,641 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 原始结果:
+[
+    {
+        "Sheet1": {
+            "labels": [],
+            "header": [1]
+        }
+    },
+    {
+        "Sheet2": {
+            "labels": [],
+            "header": []
+        }
+    },
+    {
+        "Sheet3": {
+            "labels": [],
+            "header": []
+        }
+    }
+]
+2025-10-21 17:45:35,641 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - JSON转换后处理结果:
+[{'Sheet1': {'labels': [], 'header': [1]}}, {'Sheet2': {'labels': [], 'header': []}}, {'Sheet3': {'labels': [], 'header': []}}]
+2025-10-21 17:45:35,681 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：Sheet1 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/cola_output_path.xlsx
+2025-10-21 17:45:35,688 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：Sheet2 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/cola_output_path.xlsx
+2025-10-21 17:45:35,694 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：Sheet3 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/cola_output_path.xlsx
+2025-10-21 17:45:35,699 - excel_agent.batch_preprocess - INFO - ✓ Successfully processed: cola.xlsx
+2025-10-21 17:45:35,699 - excel_agent.batch_preprocess - INFO - Processing: 公共预算支出增长统计.xlsx
+2025-10-21 17:45:35,699 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 开始取消所有 Sheet 的合并单元格...
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 读取 Excel 文件：/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/original/公共预算支出增长统计.xlsx 完成
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：表四 ...
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：F3:G3, 值：普通初中
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 6) 到 (3, 7)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：L3:M3, 值：普通高等学校
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 12) 到 (3, 13)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：J3:K3, 值：中等职业学校
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 10) 到 (3, 11)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A1:M1, 值：表四  各级教育生均一般公共预算公用经费支出增长情况
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(1, 1) 到 (1, 13)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：B3:C3, 值：幼儿园
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 2) 到 (3, 3)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A3:A4, 值：省(区、市、县)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 1) 到 (4, 1)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：D3:E3, 值：普通小学
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 4) 到 (3, 5)
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,711 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A2:M2, 值：单位：元
+2025-10-21 17:45:35,712 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(2, 1) 到 (2, 13)
+2025-10-21 17:45:35,712 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,712 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：H3:I3, 值：普通高中
+2025-10-21 17:45:35,712 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 8) 到 (3, 9)
+2025-10-21 17:45:35,712 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:35,712 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 表四 处理完成
+2025-10-21 17:45:35,721 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - Excel 处理完成，已保存至：unmerged_file_4fe223d4-2a7b-48f6-ab64-9e939eb5526d.xlsx
+2025-10-21 17:45:36,947 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:36,959 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - LLM response: [
+    {
+        "表四": {
+            "labels": [1, 2], 
+            "header": [3, 4]
+        }
+    }
+]
+2025-10-21 17:45:36,959 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 原始结果:
+[
+    {
+        "表四": {
+            "labels": [1, 2], 
+            "header": [3, 4]
+        }
+    }
+]
+2025-10-21 17:45:36,959 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - JSON转换后处理结果:
+[{'表四': {'labels': [1, 2], 'header': [3, 4]}}]
+2025-10-21 17:45:36,985 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：表四 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/公共预算支出增长统计_output_path.xlsx
+2025-10-21 17:45:36,989 - excel_agent.batch_preprocess - INFO - ✓ Successfully processed: 公共预算支出增长统计.xlsx
+2025-10-21 17:45:36,989 - excel_agent.batch_preprocess - INFO - Processing: 发电日志.xlsx
+2025-10-21 17:45:36,989 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 开始取消所有 Sheet 的合并单元格...
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 读取 Excel 文件：/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/original/发电日志.xlsx 完成
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：10月 ...
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：C43:D43, 值：2530920
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(43, 3) 到 (43, 4)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A35:A36, 值：统计值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(35, 1) 到 (36, 1)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：H3:K3, 值：非电机故障小时数
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 8) 到 (3, 11)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：L3:L4, 值：电机可利用率%
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 12) 到 (4, 12)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A3:A4, 值：电机  编号
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 1) 到 (4, 1)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：G2:K2, 值：AAA
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(2, 7) 到 (2, 11)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：E3:E4, 值：电机正常运行时间
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 5) 到 (4, 5)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：G1:K1, 值：审核
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(1, 7) 到 (1, 11)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：G3:G4, 值：电力有效小时数
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 7) 到 (4, 7)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A37:A43, 值：None
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(37, 1) 到 (43, 1)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：D3:D4, 值：发电小时数
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 4) 到 (4, 4)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：F3:F4, 值：电机故障小时数
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 6) 到 (4, 6)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A1:E2, 值：None
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(1, 1) 到 (2, 5)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：H4:I4, 值：服务时间
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(4, 8) 到 (4, 9)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：E37:L42, 值：1.1月22日7时23分，20#-30#通讯中断，原因暂未查明.
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(37, 5) 到 (42, 12)
+2025-10-21 17:45:37,008 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 10月 处理完成
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 正在处理表单：5月 ...
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：C43:D43, 值：3079440
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(43, 3) 到 (43, 4)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A35:A36, 值：统计值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(35, 1) 到 (36, 1)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：B3:C3, 值：发电量（kwh）
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 2) 到 (3, 3)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：H3:K3, 值：非电机故障小时数
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 8) 到 (3, 11)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A3:A4, 值：电机  编号
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 1) 到 (4, 1)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：G2:K2, 值：AAA
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(2, 7) 到 (2, 11)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：E3:E4, 值：电机正常运行时间
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 5) 到 (4, 5)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：G1:K1, 值：审核
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(1, 7) 到 (1, 11)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：G3:G4, 值：电力有效小时数
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 7) 到 (4, 7)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A37:A43, 值：None
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(37, 1) 到 (43, 1)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：D3:D4, 值：发电小时数
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 4) 到 (4, 4)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：F3:F4, 值：电机故障小时数
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 6) 到 (4, 6)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：L3:L4, 值：电机可利用率%
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(3, 12) 到 (4, 12)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：A1:E2, 值：None
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(1, 1) 到 (2, 5)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：H4:I4, 值：服务时间
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(4, 8) 到 (4, 9)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 发现合并单元格：E37:L42, 值：机器通讯中断，原因是通信损坏。
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 取消合并单元格：(37, 5) 到 (42, 12)
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 填充单元格的值
+2025-10-21 17:45:37,009 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 表单 5月 处理完成
+2025-10-21 17:45:37,019 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - Excel 处理完成，已保存至：unmerged_file_574de58e-d283-4d0e-a152-881e5420f7c0.xlsx
+2025-10-21 17:45:39,171 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:39,194 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - LLM response: [
+    {
+        "10月": {
+            "labels": [1, 2],
+            "header": [3, 4]
+        }
+    },
+    {
+        "5月": {
+            "labels": [1, 2],
+            "header": [3, 4]
+        }
+    }
+]
+2025-10-21 17:45:39,194 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 原始结果:
+[
+    {
+        "10月": {
+            "labels": [1, 2],
+            "header": [3, 4]
+        }
+    },
+    {
+        "5月": {
+            "labels": [1, 2],
+            "header": [3, 4]
+        }
+    }
+]
+2025-10-21 17:45:39,194 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - JSON转换后处理结果:
+[{'10月': {'labels': [1, 2], 'header': [3, 4]}}, {'5月': {'labels': [1, 2], 'header': [3, 4]}}]
+2025-10-21 17:45:39,223 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：10月 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/发电日志_output_path.xlsx
+2025-10-21 17:45:39,246 - excel_agent_preprocessing.backend.preprocessing.dismantle_excel - INFO - 处理完毕：5月 表单保存至 /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/发电日志_output_path.xlsx
+2025-10-21 17:45:39,253 - excel_agent.batch_preprocess - INFO - ✓ Successfully processed: 发电日志.xlsx
+2025-10-21 17:45:39,254 - excel_agent.batch_preprocess - INFO - Stage 1 completed. 5 files processed.
+2025-10-21 17:45:39,254 - excel_agent.batch_preprocess - INFO - === STAGE 2: Building Excel metadata ===
+2025-10-21 17:45:39,254 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/学生开题答辩组修改意见汇总_output_path.xlsx
+2025-10-21 17:45:39,254 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing file: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/学生开题答辩组修改意见汇总_output_path.xlsx
+2025-10-21 17:45:40,353 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:40,636 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 17:45:40,638 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/发电日志_output_path.xlsx
+2025-10-21 17:45:40,638 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing file: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/发电日志_output_path.xlsx
+2025-10-21 17:45:41,725 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:42,602 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 17:45:42,604 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/公共预算支出增长统计_output_path.xlsx
+2025-10-21 17:45:42,604 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing file: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/公共预算支出增长统计_output_path.xlsx
+2025-10-21 17:45:43,888 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:44,342 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 17:45:44,343 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/cola_output_path.xlsx
+2025-10-21 17:45:44,343 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing file: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/cola_output_path.xlsx
+2025-10-21 17:45:45,307 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:45,499 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 17:45:45,501 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/复杂表头_output_path.xlsx
+2025-10-21 17:45:45,501 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Processing file: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/复杂表头_output_path.xlsx
+2025-10-21 17:45:46,398 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:45:47,401 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 17:45:47,405 - excel_agent_preprocessing.backend.preprocessing.build_excel_metadata - INFO - Metadata inventory saved to /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/metadata_inventory.json
+2025-10-21 17:45:47,405 - excel_agent.batch_preprocess - INFO - ✓ Excel metadata built successfully
+2025-10-21 17:45:47,405 - excel_agent.batch_preprocess - INFO - === STAGE 3: Building vector store ===
+2025-10-21 17:45:47,408 - excel_agent.batch_preprocess - INFO - ✓ Vector store built successfully
+2025-10-21 17:45:47,408 - excel_agent.batch_preprocess - INFO - === BATCH PROCESSING COMPLETED SUCCESSFULLY ===
+2025-10-21 17:45:47,408 - excel_agent.batch_preprocess - INFO - Processed 5 Excel files
+2025-10-21 17:45:47,408 - excel_agent.batch_preprocess - INFO - Metadata saved to: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/metadata_inventory.json
+2025-10-21 17:45:47,408 - excel_agent.batch_preprocess - INFO - Vector index saved to: /Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/vector_store/faiss_index.bin

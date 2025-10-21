@@ -1,0 +1,68 @@
+2025-10-21 17:52:23,151 - app - INFO - Processing question: 可口可乐在2025年的线上销量是多少
+2025-10-21 17:52:23,152 - excel_agent.pipeline.query_index - INFO - Searching for relevant files for question: 可口可乐在2025年的线上销量是多少
+2025-10-21 17:52:24,233 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 17:52:24,240 - excel_agent.pipeline.query_index - INFO - Found 2 relevant files
+2025-10-21 17:52:24,241 - app - INFO - Found 2 relevant files
+2025-10-21 17:52:24,241 - app - INFO - Using file: cola_output_path.xlsx
+2025-10-21 17:52:24,241 - excel_agent.pipeline.code_generator - INFO - Generating code for question: 可口可乐在2025年的线上销量是多少
+2025-10-21 17:52:34,520 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:52:34,528 - excel_agent.pipeline.code_generator - INFO - Generated Python code for analysis
+2025-10-21 17:52:34,529 - app - INFO - Generated code for analysis
+2025-10-21 17:52:35,155 - root - INFO - 正在执行代码: import pandas as pd
+import warnings
+
+warnings.simplefilter(action='ignore', category=Warning)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+
+file_path = '/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/cola_output_path.xlsx'
+
+try:
+    xls = pd.ExcelFile(file_path)
+    total_online_sales = 0
+    
+    for sheet_name in xls.sheet_names:
+        df = pd.read_excel(xls, sheet_name=sheet_name)
+        if '产品系列' in df.columns and '销售渠道' in df.columns and '销售数量' in df.columns and '日期' in df.columns:
+            df['销售数量'] = pd.to_numeric(df['销售数量'], errors='coerce')
+            df['日期'] = pd.to_datetime(df['日期'], errors='coerce')
+            online_sales_2025 = df[(df['产品系列'] == '可口可乐') & 
+                                    (df['销售渠道'] == '线上') & 
+                                    (df['日期'].dt.year == 2025)]['销售数量'].sum()
+            total_online_sales += online_sales_2025
+    
+    print(total_online_sales)
+except Exception as e:
+    print(f"An error occurred: {e}")
+2025-10-21 17:52:35,459 - app - INFO - Executed code and got results
+2025-10-21 17:52:41,054 - app - INFO - Processing question: 我要睡觉了
+2025-10-21 17:52:41,054 - excel_agent.pipeline.query_index - INFO - Searching for relevant files for question: 我要睡觉了
+2025-10-21 17:52:41,728 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-10-21 17:52:41,732 - excel_agent.pipeline.query_index - INFO - Found 2 relevant files
+2025-10-21 17:52:41,732 - app - INFO - Found 2 relevant files
+2025-10-21 17:52:41,733 - app - INFO - Using file: 公共预算支出增长统计_output_path.xlsx
+2025-10-21 17:52:41,733 - excel_agent.pipeline.code_generator - INFO - Generating code for question: 我要睡觉了
+2025-10-21 17:52:46,132 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-21 17:52:46,134 - excel_agent.pipeline.code_generator - INFO - Generated Python code for analysis
+2025-10-21 17:52:46,135 - app - INFO - Generated code for analysis
+2025-10-21 17:52:46,656 - root - INFO - 正在执行代码: import pandas as pd
+import warnings
+
+warnings.simplefilter(action='ignore', category=Warning)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+
+file_path = '/Users/fangzhongliu/Documents/python_projects/HW6/excel_agent/backend/files/processed/公共预算支出增长统计_output_path.xlsx'
+
+try:
+    excel_file = pd.ExcelFile(file_path)
+    for sheet_name in excel_file.sheet_names:
+        df = pd.read_excel(file_path, sheet_name=sheet_name)
+        df = df.rename(columns=lambda x: x.strip())
+        for column in df.columns:
+            df[column] = pd.to_numeric(df[column], errors='coerce')
+        print(f"Data from sheet: {sheet_name}")
+        print(df)
+except Exception as e:
+    print(f"An error occurred: {e}")
+2025-10-21 17:52:46,971 - app - INFO - Executed code and got results

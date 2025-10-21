@@ -10,6 +10,11 @@ A powerful AI-powered Excel analysis tool that allows you to query Excel files u
 - **Safe Code Execution**: Runs generated code in isolated Jupyter kernels
 - **Multi-Sheet Support**: Handles Excel files with multiple worksheets
 - **Flexible Data Analysis**: Supports various types of data analysis tasks (summarization, filtering, calculations, etc.)
+- **Modern Web Interface**: Clean, responsive UI for easy interaction with your data
+- **Real-time Progress**: See analysis progress with Server-Sent Events (SSE)
+- **Code Visualization**: View generated Python code with syntax highlighting
+- **Interactive Data Tables**: View analysis results in formatted tables with export functionality
+- **Progressive UI Rendering**: Dynamic content containers that adapt based on content type
 
 ## Architecture
 
@@ -28,6 +33,28 @@ The system consists of three main components:
 ### 3. FastAPI Backend
 - RESTful API with endpoints for querying and health checks
 - Asynchronous processing for efficient handling of requests
+- Server-Sent Events (SSE) for real-time streaming responses
+
+### 4. Streaming Response System
+
+The system implements a sophisticated three-phase streaming response architecture:
+
+#### Phase 1: Code Generation (`content_type: 'code'`)
+- **Start**: Initializes code display container
+- **In Progress**: Streams generated Python code with syntax highlighting
+- **End**: Adds copy-to-clipboard functionality
+
+#### Phase 2: Data Processing (`content_type: 'data'`)
+- **Start**: Prepares data table container
+- **In Progress**: Streams data results (supports JSON arrays/objects)
+- **End**: Enables CSV export functionality
+
+#### Phase 3: Result Analysis (`content_type: 'result'`)
+- **Start**: Creates result display area
+- **In Progress**: Streams analysis conclusions and insights
+- **End**: Completes the analysis session
+
+Each phase uses `content_status` field (`start`, `in_progress`, `end`) to manage UI lifecycle, enabling smooth progressive rendering and interactive features.
 
 ## Installation
 
@@ -82,6 +109,22 @@ python app.py
 The API will be available at `http://localhost:8000`
 
 ### 4. Query Your Data
+
+#### Option A: Web Interface (Recommended)
+
+Start both the backend API and frontend interface:
+
+```bash
+./start.sh --frontend
+```
+
+This will start:
+- Backend API at `http://localhost:8000`
+- Frontend UI at `http://localhost:3000`
+
+Open your browser and navigate to `http://localhost:3000` to use the web interface.
+
+#### Option B: API Direct Access
 
 Send POST requests to the `/query` endpoint:
 

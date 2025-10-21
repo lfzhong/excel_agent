@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Agent - Natural Language Excel Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-table"></i> Excel Agent</h1>
+                <p>Ask questions about your Excel data in natural language</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="chat-container">
+                <div id="messages" class="messages">
+                    <!-- Messages will be dynamically added here -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Hello! I'm your Excel analysis assistant. Ask me questions about your Excel data and I'll help you analyze it.</p>
+                            <p><strong>Features:</strong></p>
+                            <ul>
+                                <li>🎯 Real-time streaming responses</li>
+                                <li>📊 Interactive data tables with export</li>
+                                <li>💻 Syntax-highlighted code blocks</li>
+                                <li>📈 Progressive result display</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <div class="input-wrapper">
+                        <input
+                            type="text"
+                            id="questionInput"
+                            placeholder="Ask a question about your Excel data..."
+                            autocomplete="off"
+                        >
+                        <button id="sendButton" class="send-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+                        <div class="spinner"></div>
+                        <span id="loadingText">Processing your question...</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

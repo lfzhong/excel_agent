@@ -2,7 +2,10 @@
 import json
 import pandas as pd
 from openai import OpenAI
+import logging
+
 client = OpenAI()
+logger = logging.getLogger(f'excel_agent.{__name__}')
 
 # Shared system prompt for code generation
 SYSTEM_PROMPT = """核心原则
@@ -45,6 +48,8 @@ def generate_code(metadata_text, question):
     Returns:
         str: Generated Python code for analyzing the Excel file
     """
+    logger.info(f"Generating code for question: {question}")
+
     # Extract file path from metadata if available
     file_path = ""
     lines = metadata_text.split('\n')
@@ -70,4 +75,5 @@ IMPORTANT: Use the file path '{file_path}' directly in your code. Do NOT use pla
 
     # Extract the generated code from the response
     generated_code = response.choices[0].message.content.strip()
+    logger.info("Generated Python code for analysis")
     return generated_code

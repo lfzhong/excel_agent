@@ -1,6 +1,9 @@
 import json, faiss, numpy as np
 from openai import OpenAI
 from pathlib import Path
+import logging
+
+logger = logging.getLogger(f'excel_agent.{__name__}')
 
 SCRIPT_DIR = Path(__file__).parent
 
@@ -10,6 +13,8 @@ TOP_K = 2
 client = OpenAI()
 
 def search_relevant_files(question):
+    logger.info(f"Searching for relevant files for question: {question}")
+
     with open(METADATA_FILE, "r", encoding="utf-8") as f:
         inventory = json.load(f)
 
@@ -21,6 +26,8 @@ def search_relevant_files(question):
 
     distances, indices = index.search(q_vec, TOP_K)
     results = [inventory[i] for i in indices[0]]
+
+    logger.info(f"Found {len(results)} relevant files")
     return results
 
 if __name__ == "__main__":
