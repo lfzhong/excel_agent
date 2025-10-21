@@ -5,16 +5,18 @@ A powerful AI-powered Excel analysis tool that allows you to query Excel files u
 ## Features
 
 - **Natural Language Queries**: Ask questions about your Excel data in plain English
+- **Voice Input**: Speak your questions using the microphone button for hands-free interaction
 - **Automatic File Discovery**: Uses semantic search to find the most relevant Excel files for your questions
 - **AI-Powered Code Generation**: Leverages GPT-4 to generate custom Python analysis code
 - **Safe Code Execution**: Runs generated code in isolated Jupyter kernels
 - **Multi-Sheet Support**: Handles Excel files with multiple worksheets
 - **Flexible Data Analysis**: Supports various types of data analysis tasks (summarization, filtering, calculations, etc.)
 - **Modern Web Interface**: Clean, responsive UI for easy interaction with your data
-- **Real-time Progress**: See analysis progress with Server-Sent Events (SSE)
+- **Real-time Streaming**: See analysis progress with WebSocket-based real-time streaming
 - **Code Visualization**: View generated Python code with syntax highlighting
 - **Interactive Data Tables**: View analysis results in formatted tables with export functionality
 - **Progressive UI Rendering**: Dynamic content containers that adapt based on content type
+- **Speech Recognition**: Built-in voice processing with automatic transcription
 
 ## Architecture
 
@@ -33,11 +35,12 @@ The system consists of three main components:
 ### 3. FastAPI Backend
 - RESTful API with endpoints for querying and health checks
 - Asynchronous processing for efficient handling of requests
-- Server-Sent Events (SSE) for real-time streaming responses
+- WebSocket support for real-time streaming responses
+- Voice processing pipeline for speech-to-text conversion
 
 ### 4. Streaming Response System
 
-The system implements a sophisticated three-phase streaming response architecture:
+The system implements a sophisticated WebSocket-based three-phase streaming response architecture:
 
 #### Phase 1: Code Generation (`content_type: 'code'`)
 - **Start**: Initializes code display container
@@ -55,6 +58,15 @@ The system implements a sophisticated three-phase streaming response architectur
 - **End**: Completes the analysis session
 
 Each phase uses `content_status` field (`start`, `in_progress`, `end`) to manage UI lifecycle, enabling smooth progressive rendering and interactive features.
+
+### 5. Voice Processing Pipeline
+
+The system includes built-in speech recognition capabilities:
+
+- **Voice Input**: Click the microphone button to record questions
+- **Automatic Transcription**: Audio is processed locally and converted to text
+- **Fallback Support**: Falls back to text input if voice processing fails
+- **Recording Limits**: Maximum 30-second recordings with visual feedback
 
 ## Installation
 
@@ -124,6 +136,12 @@ This will start:
 
 Open your browser and navigate to `http://localhost:3000` to use the web interface.
 
+**Features in the Web Interface:**
+- Type your questions or click the microphone button to speak
+- Real-time streaming responses with code, data, and results
+- Interactive data tables with CSV export
+- Syntax-highlighted code blocks with copy functionality
+
 #### Option B: API Direct Access
 
 Send POST requests to the `/query` endpoint:
@@ -147,8 +165,44 @@ curl -X POST "http://localhost:8000/query" \
 
 ## API Endpoints
 
-### POST `/query`
-Query Excel data using natural language.
+### WebSocket `/ws/query`
+Real-time Excel querying with voice support.
+
+**Message Types:**
+- **Text Message:**
+```json
+{
+  "type": "text",
+  "question": "What is the total sales amount?",
+  "chat_id": "optional-chat-id"
+}
+```
+
+- **Voice Message:**
+```json
+{
+  "type": "voice",
+  "audio_data": "base64-encoded-audio",
+  "chat_id": "optional-chat-id"
+}
+```
+
+**Streaming Response Format:**
+```json
+{
+  "response_id": "unique-response-id",
+  "content_type": "code|data|result",
+  "content_status": "start|in_progress|end",
+  "content": "streaming content",
+  "metadata": {
+    "relevant_files": ["file1.xlsx"],
+    "excel_file_used": "file1.xlsx"
+  }
+}
+```
+
+### GET `/query` (Legacy)
+Query Excel data using natural language. Returns complete response after processing.
 
 **Request Body:**
 ```json
@@ -192,7 +246,8 @@ The system uses several configuration options defined in the preprocessing scrip
 ```
 excel_agent/
 ├── backend/
-│   ├── app.py                 # FastAPI application
+│   ├── app.py                 # FastAPI application with WebSocket support
+│   ├── speech_recognition.py  # Voice processing pipeline
 │   ├── preprocessing/
 │   │   ├── batch_preprocess.py    # Main preprocessing pipeline
 │   │   ├── dismantle_excel.py     # Excel file cleaning
@@ -206,20 +261,28 @@ excel_agent/
 │       ├── original/           # Input Excel files
 │       ├── processed/          # Cleaned Excel files + metadata
 │       └── vector_store/       # FAISS index
+├── frontend/
+│   ├── index.html            # Main web interface
+│   ├── app.js                # Frontend logic with WebSocket & voice
+│   ├── styles.css            # UI styling
+│   └── frontend_server.py   # Simple HTTP server for frontend
 ├── requirements.txt           # Python dependencies
+├── start.sh                  # Startup script with frontend support
 ├── stop_all.sh               # Shutdown script
 └── README.md
 ```
 
 ## Dependencies
 
-- **FastAPI**: Web framework for the API
+- **FastAPI**: Web framework for the API with WebSocket support
 - **OpenAI**: AI models for embeddings and code generation
 - **pandas**: Data manipulation and analysis
 - **FAISS**: Vector similarity search
 - **sentence-transformers**: Text embeddings
 - **jupyter-client/ipykernel**: Safe code execution environment
 - **openpyxl**: Excel file processing
+- **websockets**: WebSocket communication
+- **speech-recognition**: Voice input processing (built-in)
 
 ## Example Use Cases
 
@@ -235,6 +298,8 @@ excel_agent/
 1. **No relevant files found**: Ensure your Excel files have been preprocessed and the vector index is built
 2. **Code execution errors**: Check that the generated code is valid Python and that required libraries are installed
 3. **OpenAI API errors**: Verify your API key is set and has sufficient credits
+4. **Voice input not working**: Ensure you're using HTTPS or localhost, and grant microphone permissions when prompted
+5. **WebSocket connection failed**: Check that the backend is running and accessible on the expected port
 
 ### Stopping the Server
 

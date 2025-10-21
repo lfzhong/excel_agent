@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -12,6 +12,9 @@ from pathlib import Path
 from pipeline.query_index import search_relevant_files
 from pipeline.code_generator import generate_code
 from pipeline.execute_python import model_execute_main
+
+# Import speech recognition
+from speech_recognition import voice_processor
 
 # Configure logging
 logging.basicConfig(
@@ -318,6 +321,309 @@ async def query_excel_data(question: str):
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+@app.websocket("/ws/query")
+async def websocket_query(websocket: WebSocket):
+    """
+    WebSocket endpoint for real-time Excel querying with voice support.
+
+    Supports both text and voice (audio) messages.
+    Voice messages are automatically transcribed to text before processing.
+    """
+    await websocket.accept()
+
+    try:
+        while True:
+            # Receive message from client
+            data = await websocket.receive_json()
+
+            message_type = data.get("type", "text")
+            chat_id = data.get("chat_id", str(uuid.uuid4()))
+            response_id = str(uuid.uuid4())
+
+            question = None
+
+            if message_type == "voice":
+                # Handle voice message
+                audio_data = data.get("audio_data")
+                if audio_data:
+                    # Send processing status
+                    await websocket.send_json(suc({
+                        "answer": "🎤 Processing voice input...",
+                        "finished": 0,
+                        "content_type": "text",
+                        "content_status": "start",
+                        "chat_id": chat_id,
+                        "response_id": response_id
+                    }))
+
+                    # Convert audio data from base64 to bytes
+                    import base64
+                    audio_bytes = base64.b64decode(audio_data)
+
+                    # Transcribe voice to text
+                    question = await voice_processor.process_voice_message(audio_bytes)
+
+                    if question:
+                        await websocket.send_json(suc({
+                            "answer": f"✅ Voice transcribed: \"{question}\"",
+                            "finished": 0,
+                            "content_type": "text",
+                            "content_status": "in_progress",
+                            "chat_id": chat_id,
+                            "response_id": response_id
+                        }))
+                    else:
+                        await websocket.send_json(suc({
+                            "answer": "❌ Could not understand voice input. Please try again.",
+                            "finished": 1,
+                            "content_type": "error",
+                            "content_status": "end",
+                            "chat_id": chat_id,
+                            "response_id": response_id
+                        }))
+                        continue
+                else:
+                    continue
+
+            elif message_type == "text":
+                # Handle text message
+                question = data.get("question", "")
+
+            if not question:
+                continue
+
+            # Process the question using the existing streaming logic
+            await process_question_stream(websocket, question, chat_id, response_id)
+
+    except WebSocketDisconnect:
+        logger.info("WebSocket connection closed")
+    except Exception as e:
+        logger.error(f"WebSocket error: {str(e)}")
+        try:
+            await websocket.send_json(suc({
+                "answer": f"❌ WebSocket error: {str(e)}",
+                "finished": 1,
+                "content_type": "error",
+                "content_status": "end",
+                "chat_id": chat_id if 'chat_id' in locals() else "",
+                "response_id": response_id if 'response_id' in locals() else ""
+            }))
+        except:
+            pass
+
+async def process_question_stream(websocket: WebSocket, question: str, chat_id: str, response_id: str):
+    """
+    Process a question and stream the results over WebSocket.
+    This reuses the logic from the original query endpoint.
+    """
+    try:
+        logger.info(f"Processing question via WebSocket: {question}")
+
+        # Step 1: Finding relevant files
+        await websocket.send_json(suc({
+            "answer": "🔍 Searching for relevant Excel files...",
+            "finished": 0,
+            "content_type": "text",
+            "content_status": "start",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        relevant_files = search_relevant_files(question)
+        if not relevant_files:
+            await websocket.send_json(suc({
+                "answer": "❌ No relevant Excel files found for your question.",
+                "finished": 1,
+                "content_type": "error",
+                "content_status": "end",
+                "chat_id": chat_id,
+                "response_id": response_id
+            }))
+            return
+
+        logger.info(f"Found {len(relevant_files)} relevant files")
+
+        # Step 2: Use the most relevant file (first result)
+        top_file = relevant_files[0]
+        file_name = top_file['file_name']
+
+        await websocket.send_json(suc({
+            "answer": f"📊 Found {len(relevant_files)} relevant files. Using: {file_name}",
+            "finished": 0,
+            "content_type": "text",
+            "content_status": "in_progress",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Construct comprehensive metadata text including column information
+        metadata_text = f"File: {top_file['file_name']}\n"
+        metadata_text += f"Summary: {top_file['summary']}\n"
+        metadata_text += f"File path: {top_file['file_path']}\n"
+        metadata_text += f"Sheet names: {', '.join(top_file['sheet_names'])}\n"
+
+        # Add column information for each sheet
+        for sheet_name, columns in top_file['columns'].items():
+            if columns:  # Only add if sheet has columns
+                metadata_text += f"Sheet '{sheet_name}' columns: {', '.join(columns)}\n"
+
+        # Add data types for each sheet
+        for sheet_name, dtypes in top_file.get('dtypes', {}).items():
+            if dtypes:  # Only add if sheet has dtypes
+                metadata_text += f"Sheet '{sheet_name}' data types: {dtypes}\n"
+
+        # Add sample data if available
+        for sheet_name, samples in top_file.get('sample_values', {}).items():
+            if samples:
+                metadata_text += f"Sample data from sheet '{sheet_name}': {str(samples[:2])}\n"
+
+        logger.info(f"Using file: {file_name}")
+        logger.info(f"Metadata text being sent to LLM: {metadata_text}")
+
+        # Step 3: Generate code based on metadata and question
+        await websocket.send_json(suc({
+            "answer": "🤖 Generating Python analysis code...",
+            "finished": 0,
+            "content_type": "text",
+            "content_status": "in_progress",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        generated_code = generate_code(metadata_text, question)
+        logger.info("Generated code for analysis")
+
+        # Step 3.5: Replace any file path assignments with the actual file path
+        actual_file_path = top_file['file_path']
+
+        # Simple approach: split into lines and replace any line containing file_path assignment
+        lines = generated_code.split('\n')
+        for i, line in enumerate(lines):
+            # Look for file_path assignment, ignoring comments
+            code_part = line.split('#')[0].strip()  # Remove comments
+            if 'file_path' in code_part and '=' in code_part:
+                # Replace the entire line with the correct assignment
+                lines[i] = f"file_path = '{actual_file_path}'"
+                break  # Only replace the first occurrence
+
+        generated_code = '\n'.join(lines)
+
+        # Send generated code - Start phase
+        await websocket.send_json(suc({
+            "answer": "",
+            "finished": 0,
+            "content_type": "code",
+            "content_status": "start",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Send generated code - In progress phase
+        await websocket.send_json(suc({
+            "answer": f"```python\n{generated_code}\n```",
+            "finished": 0,
+            "content_type": "code",
+            "content_status": "in_progress",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Send generated code - End phase
+        await websocket.send_json(suc({
+            "answer": "",
+            "finished": 0,
+            "content_type": "code",
+            "content_status": "end",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Step 4: Execute the generated code
+        await websocket.send_json(suc({
+            "answer": "⚡ Executing data analysis...",
+            "finished": 0,
+            "content_type": "text",
+            "content_status": "in_progress",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        execution_result = model_execute_main(generated_code)
+        logger.info("Executed code and got results")
+
+        # Send data results - Start phase
+        await websocket.send_json(suc({
+            "answer": "",
+            "finished": 0,
+            "content_type": "data",
+            "content_status": "start",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Send data results - In progress phase
+        # For now, we'll send the execution result as data
+        # In a more advanced implementation, this could stream DataFrame chunks
+        await websocket.send_json(suc({
+            "answer": execution_result,
+            "finished": 0,
+            "content_type": "data",
+            "content_status": "in_progress",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Send data results - End phase
+        await websocket.send_json(suc({
+            "answer": "",
+            "finished": 0,
+            "content_type": "data",
+            "content_status": "end",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Send final analysis results - Start phase
+        await websocket.send_json(suc({
+            "answer": "",
+            "finished": 0,
+            "content_type": "result",
+            "content_status": "start",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Send final analysis results - In progress phase
+        await websocket.send_json(suc({
+            "answer": f"**Analysis Complete:**\n{execution_result}",
+            "finished": 0,
+            "content_type": "result",
+            "content_status": "in_progress",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+        # Send final analysis results - End phase
+        await websocket.send_json(suc({
+            "answer": "",
+            "finished": 1,
+            "content_type": "result",
+            "content_status": "end",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
+
+    except Exception as e:
+        logger.error(f"Error processing WebSocket query: {str(e)}")
+        await websocket.send_json(suc({
+            "answer": f"❌ Error during analysis: {str(e)}",
+            "finished": 1,
+            "content_type": "error",
+            "content_status": "end",
+            "chat_id": chat_id,
+            "response_id": response_id
+        }))
 
 if __name__ == "__main__":
     import uvicorn
